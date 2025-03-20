@@ -1,126 +1,59 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-bool flag = false;
+﻿int sumPoints = 0, diffPoints = 0, productPoints = 0, divisionPoints = 0;
 List<string> list = new List<string>();
-int num1 = 0, num2 = 0;
-string listItem;
-int choice=0;
+// DateTime dateTime = new DateTime();
+bool flag = false;
 
 do
 {
-    try
-    {
-        Console.WriteLine("------------------\nEnter your choice:\n1. Addition\n2. Subtraction\n3. Multiplication\n4. Division" +
-            "\n5. Display history of calculations\n6. Exit\n------------------\n");
-        choice = Convert.ToInt32(Console.ReadLine());
-    }
-    catch(FormatException ex)
-    {
-        Console.WriteLine(ex.Message);
-    }
-    Console.WriteLine();
-
-    if (choice == 6)
-    {
-        flag = true;
-    }
-
-    if (choice >= 1 && choice <= 4)
-    {
-        try
-        {
-            Console.WriteLine("Enter 1st number:");
-            num1 = Convert.ToInt32(Console.ReadLine());
-
-            Console.WriteLine("Enter 2nd number:");
-            num2 = Convert.ToInt32(Console.ReadLine());
-        }
-        catch(FormatException ex)
-        {
-            Console.WriteLine(ex.Message);
-            choice = 7;
-        }
-        Console.WriteLine();
-    }
-
-    //int count = 1;
+    Console.WriteLine("Enter your choice:\n1. Addition\n2. Subtraction\n3. Multiplication\n4. Division" +
+        "\n5. History\n6. Quit\n");
+    int choice = Convert.ToInt32(Console.ReadLine());
 
     switch (choice)
     {
         case 1:
-            int sum = Add(num1, num2);
-            listItem = $"{num1} + {num2} = {sum}";
-            list.Add(listItem);
-            Console.WriteLine(listItem);
-            break;
-
-        case 2:
-            int difference = Subtract(num1, num2);
-            listItem = $"{num1} - {num2} = {difference}";
-            list.Add(listItem);
-            Console.WriteLine(listItem);
-            break;
-
-        case 3:
-            int multiply = Product(num1, num2);
-            listItem = $"{num1} * {num2} = {multiply}";
-            list.Add(listItem);
-            Console.WriteLine(listItem);
-            break;
-
-        case 4:
-            try
-            {
-                int divide = Divide(num1, num2);
-                listItem = $"{num1} / {num2} = {divide}";
-                list.Add(listItem);
-                Console.WriteLine(listItem);
-            }
-            catch(DivideByZeroException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            Console.WriteLine("ADDITION: ");
+            sumPoints = Addition();
+            list.Add($"{DateTime.Now}\tAddition: {sumPoints} points");
             break;
 
         case 5:
-            Console.WriteLine("\nPREVIOUS CALCULATIONS: ");
-            foreach (var i in list)
+            Console.WriteLine("PREVIOUS CALCULATIONS:\n");
+            foreach (var item in list)
             {
-                Console.WriteLine(i);
+                Console.WriteLine(item);
             }
             Console.WriteLine();
             break;
 
-
-        case 6:
-            Console.WriteLine("****QUITTING****");
-            Environment.Exit(0);
-            break;
-
         default:
-            Console.WriteLine("Try again!!!!");
+            Console.WriteLine("Try again!");
             break;
     }
-    Console.WriteLine();
-} while (flag == false);
+}while (flag == false);
 
-//Console.ReadKey();
-
-static int Add(int number1, int number2)
+static int Addition()
 {
-    return number1 + number2;
-}
-
-static int Subtract(int number1, int number2)
-{
-    return number1 - number2;
-}
-
-static int Product(int number1, int number2)
-{
-    return number1 * number2;
-}
-static int Divide(int number1, int number2)
-{
-    return number1 / number2;
+    Random random = new Random();
+    int num1, num2, userInput, sum = 0, points = 0;
+    for (int i = 0; i < 2; i++)
+    {
+        num1 = random.Next(0, 9);
+        num2 = random.Next(0, 9);
+        sum = num1 + num2;
+        Console.Write($"{num1} + {num2} = ");
+        userInput = Convert.ToInt32(Console.ReadLine());
+        if (sum == userInput)
+        {
+            Console.Write("Correct! ");
+            points++;
+        }
+        else
+        {
+            Console.Write("Wrong! ");
+        }
+        Console.WriteLine("Press any key to continue");
+        Console.ReadKey();
+    }
+    return points;
 }
